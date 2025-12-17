@@ -1,4 +1,5 @@
 import { useTheme } from '../context/ThemeContext'
+import {FaSun, FaMoon } from "react-icons/fa";
 
 
 const ThemeToggle = () => {
@@ -10,7 +11,7 @@ const ThemeToggle = () => {
             onClick={toggleTheme}
             className="absolute right-6 top-6 rounded-full border border-gray-300 px-4 py-1 text-sm text-gray-700 dark:border-gray-600 dark:text-gray-200"
         >
-            {theme === 'light' ? 'Dark' : 'Light'} Mode
+            {theme === 'light' ? <FaMoon size={20} /> : <FaSun size={20} />}
         </button>
     )
 }
