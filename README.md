@@ -4,8 +4,8 @@
 
 Ikuti langkah berikut untuk menjalankan project di local:
 
-1. **Download & install Node.js**  (Skipp jika sudah ter install)
-   👉 https://nodejs.org (disarankan versi LTS)
+1. **Download & install Node.js**  
+   👉 https://nodejs.org (disarankan versi LTS) (Skipp jika sudah ter install)
 
 2. **Cek versi Node.js**
    ```bash
