@@ -1,15 +1,18 @@
 // src/utils/data.ts
 
-const BASE_URL = 'https://inventory-api-production-your-link.up.railway.app'; // Ganti dengan URL asli teman kamu jika berbeda
+const BASE_URL = 'https://inventoryapp-production-3028.up.railway.app/api/v1';
 
-export const login = async (payload: any) => {
+export const login = async ({email, password} : {email: string, password: string}) => {
     try {
-        const response = await fetch(`${BASE_URL}/login`, {
+        const response = await fetch(`${BASE_URL}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({ email, password })
         });
-        return await response.json();
+
+        const responseJson = await response.json();
+
+        return responseJson
     } catch (error) {
         return { error: true, message: "Network Error: Failed to connect to server" };
     }
