@@ -35,7 +35,11 @@ async function register({ username, email, password }: Register) {
     const data = await response.json();
 
     if (response.status !== 201) {
-      return { success: false, message: data.error || 'Registration failed' };
+      return {
+        success: false,
+        message: data.message || 'Registration failed',
+        errors: data.errors || {},
+      };
     }
 
     return { success: true, message: data.message || 'Registration successful' };

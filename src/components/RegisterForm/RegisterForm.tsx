@@ -2,34 +2,36 @@ import Input from '../Input';
 import Button from '../Button';
 import { useState } from 'react';
 import { register } from '../../utils/data';
-import { Link, useNavigate } from 'react-router-dom';
-import type { Register } from '../../model/handler';
+import { Link } from 'react-router-dom';
+import FlashMessage from '../FlashMessage/FlashMessage';
+import Loading from '../Loading/Loading';
 
 const RegisterForm = () => {
-  const navigate = useNavigate();
-
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
-  const handleSubmit = async () => {
-    if (!username || !email || !password) {
-      setToast({ type: 'error', message: 'Harap isi semua bidang yang dibutuhkan.' });
-      return;
-    }
+  const [loading, setLoading] = useState(false);
+  const [flash, setFlash] = useState<{ type: "error" | "success"; message: string } | null>(null);
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    setFlash(null);
 
     setLoading(true);
-    setToast(null);
 
-    const result = await register({ username, email, password } as Register);
+    const response = await register({ username, email, password });
 
-    if (result.success) {
-      setToast({ type: 'success', message: result.message });
-      setTimeout(() => navigate('/'), 1500);
+    if (response.success) {
+      setFlash({ type: 'success', message: response.message });
     } else {
-      setToast({ type: 'error', message: result.message });
+      setFlash({ type: 'error', message: response.message });
+
+      if (response.errors) {
+        setErrors(response.errors);
+      }
     }
 
     setLoading(false);
@@ -41,26 +43,24 @@ const RegisterForm = () => {
         Register
       </h2>
 
-      {/* Toast Notification */}
-        {toast && (
-        <div className="fixed inset-0 flex justify-center items-center pointer-events-none z-50">
-        <div
-        className={`px-6 py-3 rounded shadow-lg text-white font-medium pointer-events-auto transition-all duration-300
-        ${toast.type === 'success' ? 'bg-green-500 animate-bounce-in' : 'bg-red-500 animate-bounce-in'}`}
-        >
-        {toast.message}
-        </div>
-      </div>
-    )}
-
-
+      {flash && (
+        <FlashMessage
+          type={flash.type}
+          message={flash.message}
+          onClose={() => setFlash(null)}
+        />
+      )}
 
       <Input
         label="Full Name"
         name="username"
         placeholder="Your name"
         value={username}
-        onChange={e => setUsername(e.target.value)}
+        onChange={e => {
+          setUsername(e.target.value);
+          setErrors(prev => ({ ...prev, username: '' }));
+        }}
+        error={errors.username}
       />
 
       <Input
@@ -68,7 +68,11 @@ const RegisterForm = () => {
         name="email"
         placeholder="you@example.com"
         value={email}
-        onChange={e => setEmail(e.target.value)}
+        onChange={e => {
+          setEmail(e.target.value);
+          setErrors(prev => ({ ...prev, email: '' }));
+        }}
+        error={errors.email}
       />
 
       <Input
@@ -77,20 +81,15 @@ const RegisterForm = () => {
         type="password"
         placeholder="••••••••"
         value={password}
-        onChange={e => setPassword(e.target.value)}
+        onChange={e => {
+          setPassword(e.target.value);
+          setErrors(prev => ({ ...prev, password: '' }));
+        }}
+        error={errors.password}
       />
 
       <Button
-        text={
-          loading ? (
-            <div className="flex items-center justify-center gap-2">
-              <span className="loader-border animate-spin rounded-full w-5 h-5 border-4 border-t-4 border-t-white border-gray-200"></span>
-              Creating...
-            </div>
-          ) : (
-            'Create Account'
-          )
-        }
+        text="Create Account"
         onClick={handleSubmit}
         disabled={loading}
         className="flex items-center justify-center gap-2"
@@ -103,23 +102,7 @@ const RegisterForm = () => {
         </span>
       </p>
 
-      {/* Tailwind loader style */}
-      <style>{`
-        .loader-border {
-          border-top-color: white;
-          animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-        .animate-bounce-in {
-          animation: bounce-in 0.5s forwards;
-        }
-        @keyframes bounce-in {
-          0% { transform: translateY(-20px); opacity: 0; }
-          100% { transform: translateY(0); opacity: 1; }
-        }
-      `}</style>
+      {loading && <Loading />}
     </div>
   );
 };
