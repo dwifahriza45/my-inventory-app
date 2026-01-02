@@ -1,6 +1,6 @@
 import AdminLayout from "../../../components/Layout/AdminLayout"
 
-const VendorList = () => {
+const DashboardList = () => {
   return (
     <AdminLayout>
       <h2 className="mb-4 text-2xl font-bold">Dashboard</h2>
@@ -26,4 +26,4 @@ const Card = ({ title, value } : vendorProps) => (
   </div>
 )
 
-export default VendorList
+export default DashboardList
