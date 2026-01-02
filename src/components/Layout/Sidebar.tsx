@@ -4,8 +4,7 @@ import { NavLink } from "react-router-dom"
 import {
   MdDashboard,
   MdPeople,
-  MdStore,
-  MdSettings,
+  MdKey,
 } from "react-icons/md"
 
 const Sidebar = () => {
@@ -13,9 +12,8 @@ const Sidebar = () => {
     <aside className="min-h-[calc(100vh-4rem)] w-64 bg-gray-900 text-gray-200">
       <nav className="flex flex-col gap-2 p-4">
         <SidebarItem icon={<MdDashboard />} label="Dashboard" to="/dashboard" />
-        <SidebarItem icon={<MdPeople />} label="Users" to="/users" />
-        <SidebarItem icon={<MdStore />} label="Vendors" to="/vendor" />
-        <SidebarItem icon={<MdSettings />} label="Settings" to="/settings" />
+        <SidebarItem icon={<MdPeople />} label="Users Management" to="/users" />
+        <SidebarItem icon={<MdKey />} label="Roles Management" to="/roles" />
       </nav>
     </aside>
   )
