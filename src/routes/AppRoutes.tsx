@@ -7,6 +7,7 @@ import NotFound from '../pages/NotFound/NotFound'
 import GuestRoute from './GuestRoute'
 import ProtectedRoute from './ProtectedRoute'
 import DashboardList from '../pages/Menu/Dashboard/DashboardList'
+import RolesList from '../pages/Menu/Dashboard/RolesList'
 
 const AppRoute = () => {
     return (
@@ -41,6 +42,17 @@ const AppRoute = () => {
                             element={
                                 <ProtectedRoute>
                                     <DashboardList />
+                                </ProtectedRoute>
+                            }
+                        />
+                        {/* END PROTECT */}
+
+                        {/* PROTECT */}
+                        <Route
+                            path="/roles"
+                            element={
+                                <ProtectedRoute>
+                                    <RolesList />
                                 </ProtectedRoute>
                             }
                         />

@@ -1,6 +1,6 @@
 
 import type { Login, Register } from "../components/model/handler";
-const BASE_URL = 'https://inventoryapp-production-3028.up.railway.app/api/v1';
+export const BASE_URL = 'https://inventoryapp-production-3028.up.railway.app/api/v1';
 
 export const getAccessToken = () => {
   return localStorage.getItem('accessToken');
