@@ -30,4 +30,8 @@ const FlashMessage = ({ type = "info", message, onClose }: FlashMessageProps) =>
   );
 };
 
+<<<<<<< HEAD
 export default FlashMessage;
+=======
+export default FlashMessage;
+>>>>>>> d949834111886c2f77b3c8a3b02298ea0e9180d3

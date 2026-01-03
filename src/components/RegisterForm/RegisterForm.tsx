@@ -24,11 +24,21 @@ const RegisterForm = () => {
 
     const response = await register({ username, email, password });
 
+<<<<<<< HEAD
     if (response.code === 201 && response.status === "OK" && response.error === false) {
       setFlash({ type: 'success', message: response.message });
     } else {
       if (response.valid) {
         setErrors(response.valid);
+=======
+    if (response.success) {
+      setFlash({ type: 'success', message: response.message });
+    } else {
+      setFlash({ type: 'error', message: response.message });
+
+      if (response.errors) {
+        setErrors(response.errors);
+>>>>>>> d949834111886c2f77b3c8a3b02298ea0e9180d3
       }
     }
 
@@ -90,13 +100,21 @@ const RegisterForm = () => {
         text="Create Account"
         onClick={handleSubmit}
         disabled={loading}
+<<<<<<< HEAD
         className="flex items-center justify-center gap-2 w-full rounded-lg bg-indigo-600 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:bg-gray-400"
+=======
+        className="flex items-center justify-center gap-2"
+>>>>>>> d949834111886c2f77b3c8a3b02298ea0e9180d3
       />
 
       <p className="text-center text-sm text-gray-600 dark:text-gray-400">
         Already have an account?{' '}
         <span className="cursor-pointer text-indigo-600">
+<<<<<<< HEAD
           <Link to="/login">Login</Link>
+=======
+          <Link to="/">Login</Link>
+>>>>>>> d949834111886c2f77b3c8a3b02298ea0e9180d3
         </span>
       </p>
 
